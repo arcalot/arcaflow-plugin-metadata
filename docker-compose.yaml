@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   plugin:
-    image: ghcr.io/arcalot/arcaflow-plugin-metadata
+    image: quay.io/arcalot/arcaflow-plugin-metadata
     build: .
     command: --file /config/example.yaml
     volumes:
