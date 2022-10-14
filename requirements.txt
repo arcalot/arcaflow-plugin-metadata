@@ -1,1 +1,2 @@
-arcaflow_plugin_sdk
+git+https://github.com/arcalot/arcaflow-plugin-sdk-python@d6a4d98017762fa488d308fbf344372fcb4f3629
+ansible==6.5.0
