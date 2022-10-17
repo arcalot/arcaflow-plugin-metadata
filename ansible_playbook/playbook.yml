@@ -1,0 +1,9 @@
+- name: Update web servers
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  tasks:
+  - name: Print facts
+    ansible.builtin.debug:
+      var: ansible_facts

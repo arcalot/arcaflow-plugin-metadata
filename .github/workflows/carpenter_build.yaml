@@ -1,0 +1,23 @@
+name: Carpentry
+on:
+  pull_request:
+env:
+  IMAGE_NAME: arcaflow-plugin-metadata
+  IMAGE_TAG: 'dev-build'
+  GITHUB_USERNAME: ${{ github.actor }}
+  GITHUB_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_NAMESPACE: ${{ github.repository_owner }}
+  QUAY_NAMESPACE: ${{ secrets.QUAY_NAMESPACE }}
+  QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+  QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
+jobs:
+  carpenter-build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this project
+        uses: actions/checkout@v3
+      - name: carpenter build
+        uses: arcalot/arcaflow-plugin-image-builder@main
+        with:
+          args: build --build

@@ -1,8 +1,8 @@
-# Python Plugin Template Project
+# Python Plugin Metadata
 
-## Image Building
+This is a simple plugin that collects all data from ansible-facts and outputs it.
 
-You can change this plugin's image version tag in
-`.github/workflows/carpenter.yaml` by editing the
-`IMAGE_TAG` variable, and pushing that change to the
-branch designated in that workflow.
+Run by creating a venv with the requirements.txt, then executing the following command:
+```
+python3 metadata_plugin.py
+```

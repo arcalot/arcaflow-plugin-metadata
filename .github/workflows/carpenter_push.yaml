@@ -1,20 +1,20 @@
-name: Carpentry
+name: Carpentry Push
 on:
   push:
     branches:
       - main
-  pull_request:
 env:
-  IMAGE_NAME: arcaflow-plugin-template-python
+  IMAGE_NAME: arcaflow-plugin-metadata
   IMAGE_TAG: 'latest'
   GITHUB_USERNAME: ${{ github.actor }}
   GITHUB_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_NAMESPACE: ${{ github.repository_owner }}
   QUAY_NAMESPACE: ${{ secrets.QUAY_NAMESPACE }}
   QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
   QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
 jobs:
-  carpenter-build:
-    name: build
+  carpenter-push:
+    name: carpenter_push
     runs-on: ubuntu-latest
     steps:
       - name: Checkout this project
