@@ -7,27 +7,23 @@ from arcaflow_plugin_sdk import plugin
 class HelloWorldTest(unittest.TestCase):
     @staticmethod
     def test_serialization():
-        plugin.test_object_serialization(
-            metadata_plugin.InputParams()
-        )
+        plugin.test_object_serialization(metadata_plugin.InputParams())
 
         plugin.test_object_serialization(
             metadata_plugin.SuccessOutput(
-                metadata= {
+                metadata={
                     "env": {
                         "SHELL": "/bin/bash",
                     },
                     "system": "linux",
                     "processor_count": 1,
-                    "system_capabilities": []
+                    "system_capabilities": [],
                 }
             )
         )
 
         plugin.test_object_serialization(
-            metadata_plugin.ErrorOutput(
-                error="This is an error"
-            )
+            metadata_plugin.ErrorOutput(error="This is an error")
         )
 
     def test_functional(self):
@@ -37,14 +33,11 @@ class HelloWorldTest(unittest.TestCase):
 
         self.assertEqual("success", output_id)
         self.assertIsInstance(output_data.metadata, dict)
-        self.assertGreaterEqual(
-            len(output_data.metadata),
-            1
-        )
+        self.assertGreaterEqual(len(output_data.metadata), 1)
         # Some expected keys in the dict
         self.assertTrue("env" in output_data.metadata)
         self.assertTrue("distribution" in output_data.metadata)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

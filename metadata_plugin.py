@@ -81,7 +81,6 @@ def collect_metadata(
         variable_manager=variable_manager,
         loader=loader,
         passwords=dict(),
-        # stdout_callback=results_callback,  # Use our custom callback instead of the ``default`` callback plugin, which prints to stdout
     )
 
     play_source = dict(
@@ -91,24 +90,27 @@ def collect_metadata(
         tasks=[],
     )
 
-    play = Play().load(play_source, variable_manager=variable_manager, loader=loader)
+    play = Play()\
+        .load(play_source, variable_manager=variable_manager, loader=loader)
 
     try:
-        result = tqm.run(play)
+        tqm.run(play)
     finally:
         tqm.cleanup()
         if loader:
             loader.cleanup_all_tmp_files()
 
-    vars = variable_manager.get_vars(play=play, include_hostvars=True)
-    host_ansible_facts = vars["hostvars"][host]["ansible_facts"]
-    # Convert to dict
-    output = convert_to_supported_type(host_ansible_facts)
+    try:
+        vars = variable_manager.get_vars(play=play, include_hostvars=True)
+        host_ansible_facts = vars["hostvars"][host]["ansible_facts"]
+        # Convert to dict
+        output = convert_to_supported_type(host_ansible_facts)
+        return "success", SuccessOutput(output)
+    except KeyError:
+        return "error", ErrorOutput("missing a key in ansible facts")
 
-    return "success", SuccessOutput(output)
 
-
-def convert_to_supported_type(ansible_value):
+def convert_to_supported_type(ansible_value) -> typing.Dict:
     type_of_val = type(ansible_value)
     if type_of_val == list:
         new_list = []
@@ -122,13 +124,7 @@ def convert_to_supported_type(ansible_value):
                 ansible_value[k]
             )
         return result
-    if (
-        type_of_val == float
-        or type_of_val == int
-        or type_of_val == str
-        or type_of_val == bool
-        or type_of_val == type(None)
-    ):
+    if type_of_val in (float, int, str, bool, type(None)):
         return ansible_value
     elif type_of_val == AnsibleUnsafeText:
         return str(ansible_value)
