@@ -26,7 +26,7 @@ resolvelib = ">=0.5.3,<0.9.0"
 
 [[package]]
 name = "arcaflow-plugin-sdk"
-version = "0.8.0"
+version = "0.9.0"
 description = "Plugin SDK for the Arcaflow workflow engine"
 category = "main"
 optional = false
@@ -416,7 +416,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "00d5d8c44fa902c12ef67b0d47ec07dc7820cd2df09f49dde281a310dc845858"
+content-hash = "dc161efffc82aa925a8465aca231f9517c8f361da439937bfc129b16d2f1fcd8"
 
 [metadata.files]
 ansible = []
