@@ -124,8 +124,10 @@ def convert_to_supported_type(ansible_value) -> typing.Dict:
                 ansible_value[k]
             )
         return result
-    if type_of_val in (float, int, str, bool, type(None)):
+    if type_of_val in (float, int, str, bool):
         return ansible_value
+    if type_of_val == type(None):
+        return str("")
     elif type_of_val == AnsibleUnsafeText:
         return str(ansible_value)
     else:
