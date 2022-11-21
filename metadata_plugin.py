@@ -117,15 +117,17 @@ def convert_to_supported_type(ansible_value) -> typing.Dict:
         for i in ansible_value:
             new_list.append(convert_to_supported_type(i))
         return new_list
-    if type_of_val == dict:
+    elif type_of_val == dict:
         result = {}
         for k in ansible_value:
             result[convert_to_supported_type(k)] = convert_to_supported_type(
                 ansible_value[k]
             )
         return result
-    if type_of_val in (float, int, str, bool, type(None)):
+    elif type_of_val in (float, int, str, bool):
         return ansible_value
+    elif isinstance(type_of_val, type(None)):
+        return str("")
     elif type_of_val == AnsibleUnsafeText:
         return str(ansible_value)
     else:
