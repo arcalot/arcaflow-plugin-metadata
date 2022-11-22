@@ -90,8 +90,7 @@ def collect_metadata(
         tasks=[],
     )
 
-    play = Play()\
-        .load(play_source, variable_manager=variable_manager, loader=loader)
+    play = Play().load(play_source, variable_manager=variable_manager, loader=loader)
 
     try:
         tqm.run(play)
