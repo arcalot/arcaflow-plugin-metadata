@@ -116,7 +116,18 @@ def convert_to_supported_type(ansible_value) -> typing.Dict:
         new_list = []
         for i in ansible_value:
             new_list.append(convert_to_supported_type(i))
-        return new_list
+        # A list needs to be of a consistent type or it will
+        # not be indexible into a system like Elasticsearch
+        list_type = str()
+        for j in new_list:
+            if type(j) in (str, bool, type(None)):
+                list_type = str()
+                break
+            elif type(j) == float:
+                list_type = float()
+            elif type(j) == int and type(list_type) != float:
+                list_type = int()
+        return list(map(type(list_type), new_list))
     elif type_of_val == dict:
         result = {}
         for k in ansible_value:
