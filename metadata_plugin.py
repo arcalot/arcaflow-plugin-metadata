@@ -118,16 +118,7 @@ def convert_to_supported_type(ansible_value) -> typing.Dict:
             new_list.append(convert_to_supported_type(i))
         # A list needs to be of a consistent type or it will
         # not be indexible into a system like Elasticsearch
-        list_type = str()
-        for j in new_list:
-            if type(j) in (str, bool, type(None)):
-                list_type = str()
-                break
-            elif type(j) == float:
-                list_type = float()
-            elif type(j) == int and type(list_type) != float:
-                list_type = int()
-        return list(map(type(list_type), new_list))
+        return convert_to_homogenous_list(new_list)
     elif type_of_val == dict:
         result = {}
         for k in ansible_value:
@@ -144,6 +135,23 @@ def convert_to_supported_type(ansible_value) -> typing.Dict:
     else:
         print("Unknown type", type_of_val, "with val", str(ansible_value))
         return str(ansible_value)
+
+
+def convert_to_homogenous_list(input_list: list):
+    # To make all types in list homogeneous, we upconvert them
+    # to the least commom type.
+    # int -> float -> str
+    # bool + None -> str
+    list_type = str()
+    for j in input_list:
+        if type(j) in (str, bool, type(None)):
+            list_type = str()
+            break
+        elif type(j) == float:
+            list_type = float()
+        elif type(j) == int and type(list_type) != float:
+            list_type = int()
+    return list(map(type(list_type), input_list))
 
 
 if __name__ == "__main__":
