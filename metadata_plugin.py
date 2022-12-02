@@ -4,14 +4,9 @@ import sys
 import typing
 from dataclasses import dataclass, field
 from arcaflow_plugin_sdk import plugin
-from ansible.executor.task_queue_manager import TaskQueueManager
-from ansible.parsing.dataloader import DataLoader
-from ansible.module_utils.common.collections import ImmutableDict
-from ansible.inventory.manager import InventoryManager
-from ansible.playbook.play import Play
-from ansible.vars.manager import VariableManager
 from ansible.utils.unsafe_proxy import AnsibleUnsafeText
-from ansible import context
+import ansible_runner
+
 
 
 @dataclass
@@ -40,6 +35,7 @@ class ErrorOutput:
     error: str
 
 
+
 @plugin.step(
     id="collect-metadata",
     name="Collect Metadata",
@@ -49,59 +45,12 @@ class ErrorOutput:
 def collect_metadata(
     params: InputParams,
 ) -> typing.Tuple[str, typing.Union[SuccessOutput, ErrorOutput]]:
-    """The function is the implementation for the step. It needs the decorator
-    above to make it into a step. The type hints for the params are required.
 
-    :param params:
-
-    :return: the string identifying which output it is, as well the output
-        structure
-    """
-    host = "localhost"
-
-    context.CLIARGS = ImmutableDict(
-        connection="local",
-        # module_path=['/to/mymodules', '/usr/share/ansible'],
-        forks=5,
-        become=None,
-        become_method=None,
-        become_user=None,
-        check=False,
-        diff=False,
-        verbosity=0,
-    )
-
-    loader = DataLoader()
-    inventory = InventoryManager(loader=loader, sources=host + ",")
-    variable_manager = VariableManager(loader=loader, inventory=inventory)
-
-    # Must be initialized before play.load()
-    tqm = TaskQueueManager(
-        inventory=inventory,
-        variable_manager=variable_manager,
-        loader=loader,
-        passwords=dict(),
-    )
-
-    play_source = dict(
-        name="Metadata Collection",
-        hosts=[host],
-        gather_facts=True,
-        tasks=[],
-    )
-
-    play = Play().load(play_source, variable_manager=variable_manager, loader=loader)
+    ansible_host = "localhost"
 
     try:
-        tqm.run(play)
-    finally:
-        tqm.cleanup()
-        if loader:
-            loader.cleanup_all_tmp_files()
-
-    try:
-        vars = variable_manager.get_vars(play=play, include_hostvars=True)
-        host_ansible_facts = vars["hostvars"][host]["ansible_facts"]
+        r = ansible_runner.run(private_data_dir='/tmp', host_pattern=ansible_host, module='gather_facts')
+        host_ansible_facts = r.get_fact_cache(ansible_host)
         # Convert to dict
         output = convert_to_supported_type(host_ansible_facts)
         return "success", SuccessOutput(output)
