@@ -8,7 +8,6 @@ from ansible.utils.unsafe_proxy import AnsibleUnsafeText
 import ansible_runner
 
 
-
 @dataclass
 class InputParams:
     """
@@ -35,7 +34,6 @@ class ErrorOutput:
     error: str
 
 
-
 @plugin.step(
     id="collect-metadata",
     name="Collect Metadata",
@@ -49,7 +47,9 @@ def collect_metadata(
     ansible_host = "localhost"
 
     try:
-        r = ansible_runner.run(private_data_dir='/tmp', host_pattern=ansible_host, module='gather_facts')
+        r = ansible_runner.run(
+            private_data_dir="/tmp", host_pattern=ansible_host, module="gather_facts"
+        )
         host_ansible_facts = r.get_fact_cache(ansible_host)
         # Convert to dict
         output = convert_to_supported_type(host_ansible_facts)
