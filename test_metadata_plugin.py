@@ -40,7 +40,9 @@ class MetadataTest(unittest.TestCase):
         output_id, output_data = metadata_plugin.collect_metadata(input)
 
         self.assertEqual("success", output_id)
-        self.assertIsInstance(output_data.metadata, metadata_schema.SelectedFacts)
+        self.assertIsInstance(
+            output_data.metadata, metadata_schema.SelectedFacts
+        )
         self.assertGreaterEqual(len(output_data.metadata.architecture), 1)
         # Some expected keys in the dict
         self.assertIsInstance(output_data.metadata.env, dict)
@@ -70,10 +72,14 @@ class MetadataTest(unittest.TestCase):
             int, type(metadata_plugin.convert_to_homogenous_list([1, 1, 1])[0])
         )
         self.assertEqual(
-            float, type(metadata_plugin.convert_to_homogenous_list([1, 1, 1.0])[0])
+            float,
+            type(metadata_plugin.convert_to_homogenous_list([1, 1, 1.0])[0]),
         )
         self.assertEqual(
-            str, type(metadata_plugin.convert_to_homogenous_list([1, 1.0, "1.0"])[0])
+            str,
+            type(
+                metadata_plugin.convert_to_homogenous_list([1, 1.0, "1.0"])[0]
+            ),
         )
 
 
