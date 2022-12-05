@@ -2,14 +2,12 @@
 
 import sys
 import typing
-from dataclasses import dataclass, field
 from arcaflow_plugin_sdk import plugin
 from ansible.utils.unsafe_proxy import AnsibleUnsafeText
 import ansible_runner
 
 from metadata_schema import (
     InputParams,
-    SelectedFacts,
     SuccessOutput,
     ErrorOutput,
     selected_facts_schema,
@@ -34,7 +32,7 @@ def collect_metadata(
             private_data_dir="/tmp", host_pattern=ansible_host, module="gather_facts"
         )
         host_ansible_facts = r.get_fact_cache(ansible_host)
-        
+
         for fact, value in host_ansible_facts.items():
             new_fact = fact[len("ansible_"):]
             if new_fact in selected_facts_schema.properties:
@@ -43,9 +41,7 @@ def collect_metadata(
         # Convert to dict
         output = convert_to_supported_type(selected_facts)
 
-        return "success", SuccessOutput(
-            selected_facts_schema.unserialize(output)
-        )
+        return "success", SuccessOutput(selected_facts_schema.unserialize(output))
     except KeyError:
         return "error", ErrorOutput("missing a key in ansible facts")
 
