@@ -29,7 +29,7 @@ def collect_metadata(
 
     try:
         r = ansible_runner.run(
-            private_data_dir="/tmp", host_pattern=ansible_host, module="gather_facts"
+            private_data_dir="/tmp", host_pattern=ansible_host, module="gather_facts", quiet=True
         )
         host_ansible_facts = r.get_fact_cache(ansible_host)
 
