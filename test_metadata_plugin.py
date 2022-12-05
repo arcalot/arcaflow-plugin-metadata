@@ -35,8 +35,8 @@ class HelloWorldTest(unittest.TestCase):
         self.assertIsInstance(output_data.metadata, dict)
         self.assertGreaterEqual(len(output_data.metadata), 1)
         # Some expected keys in the dict
-        self.assertTrue("env" in output_data.metadata)
-        self.assertTrue("distribution" in output_data.metadata)
+        self.assertTrue("ansible_env" in output_data.metadata)
+        self.assertTrue("ansible_distribution" in output_data.metadata)
 
     def test_convert_to_homogeneous_list(self):
         test_cases = [

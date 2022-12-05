@@ -1,4 +1,4 @@
 [flake8]
 doctests = True
-exclude = .venv,.git,.tox,dist,doc,build,__pycache__
+exclude = .venv,.git,.tox,dist,doc,build,__pycache__,venv
 max-line-length = 88
