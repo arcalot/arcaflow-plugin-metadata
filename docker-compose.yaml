@@ -5,6 +5,4 @@ services:
     build: .
     command: --file /config/example.yaml
     volumes:
-      - source: ./example.yaml
-        target: /config/example.yaml
-        type: bind
+      - ./config:/config:Z

@@ -2,36 +2,16 @@
 
 import sys
 import typing
-from dataclasses import dataclass, field
 from arcaflow_plugin_sdk import plugin
 from ansible.utils.unsafe_proxy import AnsibleUnsafeText
 import ansible_runner
 
-
-@dataclass
-class InputParams:
-    """
-    This is the data structure for the input parameters of the step defined
-    below.
-    """
-
-
-@dataclass
-class SuccessOutput:
-    """
-    This is the output data structure for the success case.
-    """
-
-    metadata: typing.Any = field()
-
-
-@dataclass
-class ErrorOutput:
-    """
-    This is the output data structure in the error  case.
-    """
-
-    error: str
+from metadata_schema import (
+    InputParams,
+    SuccessOutput,
+    ErrorOutput,
+    selected_facts_schema,
+)
 
 
 @plugin.step(
@@ -45,15 +25,28 @@ def collect_metadata(
 ) -> typing.Tuple[str, typing.Union[SuccessOutput, ErrorOutput]]:
 
     ansible_host = "localhost"
+    selected_facts = {}
 
     try:
         r = ansible_runner.run(
-            private_data_dir="/tmp", host_pattern=ansible_host, module="gather_facts"
+            private_data_dir="/tmp",
+            host_pattern=ansible_host,
+            module="gather_facts",
+            quiet=True,
         )
         host_ansible_facts = r.get_fact_cache(ansible_host)
+
+        for fact, value in host_ansible_facts.items():
+            new_fact = fact[len("ansible_"):]
+            if new_fact in selected_facts_schema.properties:
+                selected_facts.update({new_fact: value})
+
         # Convert to dict
-        output = convert_to_supported_type(host_ansible_facts)
-        return "success", SuccessOutput(output)
+        output = convert_to_supported_type(selected_facts)
+
+        return "success", SuccessOutput(
+            selected_facts_schema.unserialize(output)
+        )
     except KeyError:
         return "error", ErrorOutput("missing a key in ansible facts")
 

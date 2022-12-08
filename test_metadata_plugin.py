@@ -1,24 +1,32 @@
 #!/usr/bin/env python3
 import unittest
 import metadata_plugin
+import metadata_schema
 from arcaflow_plugin_sdk import plugin
 
 
-class HelloWorldTest(unittest.TestCase):
+class MetadataTest(unittest.TestCase):
     @staticmethod
     def test_serialization():
         plugin.test_object_serialization(metadata_plugin.InputParams())
 
         plugin.test_object_serialization(
-            metadata_plugin.SuccessOutput(
-                metadata={
-                    "env": {
-                        "SHELL": "/bin/bash",
-                    },
-                    "system": "linux",
-                    "processor_count": 1,
-                    "system_capabilities": [],
-                }
+            metadata_schema.SelectedFacts(
+                fqdn="foo.bar",
+                architecture="x86_64",
+                kernel="1.2.3.test4",
+                machine_id="abc123",
+                memtotal_mb=10,
+                swaptotal_mb=5,
+                processor_cores=8,
+                processor_count=4,
+                processor_threads_per_core=2,
+                product_name="narf",
+                product_version="a.b.c.1",
+                system_vendor="LENOVO",
+                processor=["0", "Intel", "Xeon", "1", "Intel", "Xeon"],
+                env={"FOO": "BAR", "NARF": "BLARG"},
+                uptime_seconds=9999,
             )
         )
 
@@ -32,11 +40,15 @@ class HelloWorldTest(unittest.TestCase):
         output_id, output_data = metadata_plugin.collect_metadata(input)
 
         self.assertEqual("success", output_id)
-        self.assertIsInstance(output_data.metadata, dict)
-        self.assertGreaterEqual(len(output_data.metadata), 1)
+        self.assertIsInstance(
+            output_data.metadata, metadata_schema.SelectedFacts
+        )
+        self.assertGreaterEqual(len(output_data.metadata.architecture), 1)
         # Some expected keys in the dict
-        self.assertTrue("ansible_env" in output_data.metadata)
-        self.assertTrue("ansible_distribution" in output_data.metadata)
+        self.assertIsInstance(output_data.metadata.env, dict)
+        self.assertIsInstance(output_data.metadata.kernel, str)
+        self.assertIsInstance(output_data.metadata.processor, list)
+        self.assertIsInstance(output_data.metadata.swaptotal_mb, int)
 
     def test_convert_to_homogeneous_list(self):
         test_cases = [
@@ -60,10 +72,14 @@ class HelloWorldTest(unittest.TestCase):
             int, type(metadata_plugin.convert_to_homogenous_list([1, 1, 1])[0])
         )
         self.assertEqual(
-            float, type(metadata_plugin.convert_to_homogenous_list([1, 1, 1.0])[0])
+            float,
+            type(metadata_plugin.convert_to_homogenous_list([1, 1, 1.0])[0]),
         )
         self.assertEqual(
-            str, type(metadata_plugin.convert_to_homogenous_list([1, 1.0, "1.0"])[0])
+            str,
+            type(
+                metadata_plugin.convert_to_homogenous_list([1, 1.0, "1.0"])[0]
+            ),
         )
 
 
