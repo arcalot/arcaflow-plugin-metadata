@@ -1,0 +1,62 @@
+name: Carpenter
+on:
+  push:
+    branches:
+      - "**"
+  release:
+    types:
+      - published
+env:
+  IMAGE_NAME: ${{ github.event.repository.name }}
+  IMAGE_TAG: 'latest'
+  QUAY_IMG_EXP: 'never'
+  GITHUB_USERNAME: ${{ github.actor }}
+  GITHUB_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_NAMESPACE: ${{ github.repository_owner }}
+  QUAY_NAMESPACE: ${{ secrets.QUAY_NAMESPACE }}
+  QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+  QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
+jobs:
+  carpenter-build-release:
+    name: carpenter_build_release
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    steps:
+      - name: set_image_tag
+        run: |
+          echo "IMAGE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Checkout this project
+        uses: actions/checkout@v3
+      - name: carpenter build
+        uses: arcalot/arcaflow-plugin-image-builder@main
+        with:
+          args: build --build --push
+  carpenter-build-prod:
+    name: carpenter_build_prod
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout this project
+        uses: actions/checkout@v3
+      - name: carpenter build
+        uses: arcalot/arcaflow-plugin-image-builder@main
+        with:
+          args: build --build --push
+  carpenter-build-dev:
+    name: carpenter_build_dev
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main' && github.event_name != 'release'
+    steps:
+      - name: set_image_tag
+        run: |
+          export commit_hash=${{ github.sha }}
+          echo "IMAGE_TAG=${GITHUB_REF##*/}_${commit_hash:0:7}" >> $GITHUB_ENV
+      - name: set_quay_image_expiration
+        run: |
+          echo "QUAY_IMG_EXP=90d" >> $GITHUB_ENV
+      - name: Checkout this project
+        uses: actions/checkout@v3
+      - name: carpenter build
+        uses: arcalot/arcaflow-plugin-image-builder@main
+        with:
+          args: build --build --push

@@ -3,6 +3,6 @@ services:
   plugin:
     image: quay.io/arcalot/arcaflow-plugin-metadata
     build: .
-    command: --file /config/example.yaml
+    command: "--file /config/example.yaml"
     volumes:
       - ./config:/config:Z
