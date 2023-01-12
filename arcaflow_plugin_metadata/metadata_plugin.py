@@ -3,7 +3,6 @@
 import sys
 import typing
 from arcaflow_plugin_sdk import plugin
-from arcaflow_plugin_metadata import metadata_schema
 from ansible.utils.unsafe_proxy import AnsibleUnsafeText
 import ansible_runner
 
