@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import unittest
-import metadata_plugin
-import metadata_schema
+from arcaflow_plugin_metadata import metadata_plugin
+from arcaflow_plugin_metadata import metadata_schema
 from arcaflow_plugin_sdk import plugin
 
 

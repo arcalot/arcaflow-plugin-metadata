@@ -1,24 +1,48 @@
-FROM quay.io/centos/centos:stream8
+ARG package=arcaflow_plugin_metadata
 
+# build poetry
+FROM quay.io/centos/centos:stream8 as poetry
+ARG package
 RUN dnf -y module install python39 && dnf -y install python39 python39-pip
-RUN mkdir /app
-ADD https://raw.githubusercontent.com/arcalot/arcaflow-plugins/main/LICENSE /app
-ADD metadata_plugin.py /app
-ADD metadata_schema.py /app
-ADD test_metadata_plugin.py /app
-ADD requirements.txt /app
+
 WORKDIR /app
 
-RUN pip3 install -r requirements.txt
+COPY poetry.lock /app/
+COPY pyproject.toml /app/
+
+RUN python3.9 -m pip install poetry \
+ && python3.9 -m poetry config virtualenvs.create false \
+ && python3.9 -m poetry install --without dev \
+ && python3.9 -m poetry export -f requirements.txt --output requirements.txt --without-hashes
+
+# run tests
+COPY ${package}/ /app/${package}
+COPY tests /app/tests
+
+ENV PYTHONPATH /app/${package}
 
 RUN mkdir /htmlcov
 RUN pip3 install coverage
-RUN python3 -m coverage run test_metadata_plugin.py
+RUN python3 -m coverage run tests/test_metadata_plugin.py
 RUN python3 -m coverage html -d /htmlcov --omit=/usr/local/*
 
-VOLUME /config
 
-ENTRYPOINT ["python3", "/app/metadata_plugin.py"]
+# final image
+FROM quay.io/centos/centos:stream8
+ARG package
+RUN dnf -y module install python39 && dnf -y install python39 python39-pip
+
+WORKDIR /app
+
+COPY --from=poetry /app/requirements.txt /app/
+COPY --from=poetry /htmlcov /htmlcov/
+COPY LICENSE /app/
+COPY README.md /app/
+COPY ${package}/ /app/${package}
+
+RUN python3.9 -m pip install -r requirements.txt
+
+ENTRYPOINT ["python3", "-m", "arcaflow_plugin_metadata.metadata_plugin"]
 CMD []
 
 LABEL org.opencontainers.image.source="https://github.com/arcalot/arcaflow-plugin-metadata"
