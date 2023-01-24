@@ -6,34 +6,13 @@ on:
   release:
     types:
       - published
-env:
-  IMAGE_NAME: ${{ github.event.repository.name }}
-  IMAGE_TAG: 'latest'
-  QUAY_IMG_EXP: 'never'
-  GITHUB_USERNAME: ${{ github.actor }}
-  GITHUB_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-  GITHUB_NAMESPACE: ${{ github.repository_owner }}
-  QUAY_NAMESPACE: ${{ secrets.QUAY_NAMESPACE }}
-  QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
-  QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
 jobs:
-  carpenter-build:
-    name: Build ${{ github.ref_name }} from ${{ github.event_name }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set image tag for release
-        if: github.event_name == 'release'
-        run: |
-          echo "IMAGE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-      - name: Set image tag and expiration for dev
-        if: github.ref != 'refs/heads/main' && github.event_name != 'release'
-        run: |
-          export commit_hash=${{ github.sha }}
-          echo "IMAGE_TAG=${GITHUB_REF##*/}_${commit_hash:0:7}" >> $GITHUB_ENV
-          echo "QUAY_IMG_EXP=90d" >> $GITHUB_ENV
-      - name: Checkout this project
-        uses: actions/checkout@v3
-      - name: Carpenter build
-        uses: arcalot/arcaflow-plugin-image-builder@main
-        with:
-          args: build --build --push
+  carpenter:
+    uses: arcalot/arcaflow-reusable-workflows/.github/workflows/carpenter.yaml@main
+    with:
+      image_name: ${{ github.event.repository.name }}
+      image_tag: 'latest'
+      quay_img_exp: 'never'
+      github_username: ${{ github.actor }}
+      github_namespace: ${{ github.repository_owner }}
+    secrets: inherit
