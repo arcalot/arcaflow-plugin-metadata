@@ -1,0 +1,20 @@
+name: Arcaflow Container Toolkit
+on:
+  push:
+    branches:
+      - "**"
+  release:
+    types:
+      - published
+jobs:
+  act:
+    uses: arcalot/arcaflow-container-toolkit/.github/workflows/reusable_workflow.yaml@main
+    with:
+      image_name: ${{ github.event.repository.name }}
+      image_tag: 'latest'
+      github_username: ${{ github.actor }}
+      github_namespace: ${{ github.repository_owner }}
+    secrets:
+      QUAY_NAMESPACE: ${{ secrets.QUAY_NAMESPACE }}
+      QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+      QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
