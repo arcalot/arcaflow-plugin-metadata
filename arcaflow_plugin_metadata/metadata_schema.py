@@ -70,12 +70,12 @@ class SelectedFacts:
         }
     )
 
-    machine_id: str = field(
-        metadata={
-            "name": "ansible machine ID",
-            "description": "The system machine ID",
-        }
-    )
+    # machine_id: str = field(
+    #     metadata={
+    #         "name": "ansible machine ID",
+    #         "description": "The system machine ID",
+    #     }
+    # )
 
     memtotal_mb: int = field(
         metadata={
