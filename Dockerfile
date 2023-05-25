@@ -9,6 +9,7 @@ WORKDIR /app
 
 COPY poetry.lock /app/
 COPY pyproject.toml /app/
+COPY ${package}/ /app/${package}
 
 RUN python3.9 -m pip install poetry \
  && python3.9 -m poetry config virtualenvs.create false \
@@ -16,13 +17,11 @@ RUN python3.9 -m pip install poetry \
  && python3.9 -m poetry export -f requirements.txt --output requirements.txt --without-hashes
 
 # run tests
-COPY ${package}/ /app/${package}
 COPY tests /app/tests
-
-ENV PYTHONPATH /app/${package}
 
 RUN mkdir /htmlcov
 RUN pip3 install coverage
+RUN ansible -m gather_facts localhost |grep machine
 RUN python3 -m coverage run tests/test_metadata_plugin.py
 RUN python3 -m coverage html -d /htmlcov --omit=/usr/local/*
 
@@ -42,12 +41,14 @@ COPY ${package}/ /app/${package}
 
 RUN python3.9 -m pip install -r requirements.txt
 
-ENTRYPOINT ["python3", "-m", "arcaflow_plugin_metadata.metadata_plugin"]
+WORKDIR /app/${package}
+
+ENTRYPOINT ["python3", "metadata_plugin.py"]
 CMD []
 
 LABEL org.opencontainers.image.source="https://github.com/arcalot/arcaflow-plugin-metadata"
 LABEL org.opencontainers.image.licenses="Apache-2.0+GPL-2.0-only"
 LABEL org.opencontainers.image.vendor="Arcalot project"
 LABEL org.opencontainers.image.authors="Arcalot contributors"
-LABEL org.opencontainers.image.title="Python Plugin Template"
+LABEL org.opencontainers.image.title="Arcaflow metadata plugin"
 LABEL io.github.arcalot.arcaflow.plugin.version="1"
