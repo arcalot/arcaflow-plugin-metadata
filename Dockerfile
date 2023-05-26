@@ -21,7 +21,6 @@ COPY tests /app/tests
 
 RUN mkdir /htmlcov
 RUN pip3 install coverage
-RUN ansible -m gather_facts localhost |grep machine
 RUN python3 -m coverage run tests/test_metadata_plugin.py
 RUN python3 -m coverage html -d /htmlcov --omit=/usr/local/*
 
