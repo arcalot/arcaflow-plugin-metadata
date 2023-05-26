@@ -15,7 +15,7 @@ class MetadataTest(unittest.TestCase):
                 fqdn="foo.bar",
                 architecture="x86_64",
                 kernel="1.2.3.test4",
-                machine_id="abc123",
+                # machine_id="abc123",
                 memtotal_mb=10,
                 swaptotal_mb=5,
                 processor_cores=8,
