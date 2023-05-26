@@ -1,4 +1,4 @@
-name: Arcaflow Container Toolkit
+name: Arcaflow CI Workflow
 on:
   push:
     branches:
@@ -12,9 +12,13 @@ jobs:
     with:
       image_name: ${{ github.event.repository.name }}
       image_tag: 'latest'
-      github_username: ${{ github.actor }}
-      github_namespace: ${{ github.repository_owner }}
     secrets:
       QUAY_NAMESPACE: ${{ secrets.QUAY_NAMESPACE }}
       QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
       QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
+
+  docsgen:
+    needs: act
+    uses: arcalot/arcaflow-docsgen/.github/workflows/reusable_workflow.yaml@main
+    with:
+      plugin_path: "arcaflow_plugin_template_python/arcaflow_plugin_template_python.py"
