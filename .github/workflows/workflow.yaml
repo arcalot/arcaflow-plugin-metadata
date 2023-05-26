@@ -21,4 +21,4 @@ jobs:
     needs: act
     uses: arcalot/arcaflow-docsgen/.github/workflows/reusable_workflow.yaml@main
     with:
-      plugin_path: "arcaflow_plugin_template_python/arcaflow_plugin_template_python.py"
+      plugin_path: "arcaflow_plugin_metadata/metadata_plugin.py"
