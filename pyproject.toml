@@ -2,12 +2,17 @@
 name = "arcaflow-plugin-metadata"
 version = "0.1.0"
 description = ""
-authors = ["Arcalot"]
+authors = ["Arcalot Contributors"]
 license = "Apache-2.0+GPL-2.0-only"
+
+packages = [
+   { include="metadata_plugin.py", from="./arcaflow_plugin_metadata"  },
+   { include="metadata_schema.py", from="./arcaflow_plugin_metadata"  },
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-arcaflow-plugin-sdk = "0.9.0"
+arcaflow-plugin-sdk = "0.10.1"
 ansible-core = "^2.14.0"
 ansible-runner = "2.3.1"
 
