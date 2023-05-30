@@ -42,7 +42,7 @@ RUN python3.9 -m pip install -r requirements.txt
 
 WORKDIR /app/${package}
 
-ENTRYPOINT ["python3", "metadata_plugin.py"]
+ENTRYPOINT ["python3", "-m", "arcaflow_plugin_metadata"]
 CMD []
 
 LABEL org.opencontainers.image.source="https://github.com/arcalot/arcaflow-plugin-metadata"

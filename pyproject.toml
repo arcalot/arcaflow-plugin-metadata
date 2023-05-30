@@ -6,8 +6,7 @@ authors = ["Arcalot Contributors"]
 license = "Apache-2.0+GPL-2.0-only"
 
 packages = [
-   { include="metadata_plugin.py", from="./arcaflow_plugin_metadata"  },
-   { include="metadata_schema.py", from="./arcaflow_plugin_metadata"  },
+   { include="arcaflow_plugin_metadata.py", from="./arcaflow_plugin_metadata"  },
 ]
 
 [tool.poetry.dependencies]
