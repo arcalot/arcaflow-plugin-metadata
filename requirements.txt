@@ -273,9 +273,9 @@ PyYAML==6.0.1; python_version >= "3.9" and python_version < "4.0" \
 resolvelib==1.0.1; python_version >= "3.9" and python_version < "4.0" \
     --hash=sha256:04ce76cbd63fded2078ce224785da6ecd42b9564b1390793f64ddecbe997b309 \
     --hash=sha256:d2da45d1a8dfee81bdd591647783e340ef3bcb104b54c383f70d422ef5cc7dbf
-setuptools==68.0.0; python_version >= "3.9" and python_version < "4.0" \
-    --hash=sha256:11e52c67415a381d10d6b462ced9cfb97066179f0e871399e006c4ab101fc85f \
-    --hash=sha256:baf1fdb41c6da4cd2eae722e135500da913332ab3f2f5c7d33af9b492acb5235
+setuptools==68.1.0; python_version >= "3.9" and python_version < "4.0" \
+    --hash=sha256:d59c97e7b774979a5ccb96388efc9eb65518004537e85d52e81eaee89ab6dd91 \
+    --hash=sha256:e13e1b0bc760e9b0127eda042845999b2f913e12437046e663b833aa96d89715
 six==1.16.0 ; python_version >= "3.9" and python_version < "4.0" \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
