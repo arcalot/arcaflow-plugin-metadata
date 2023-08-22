@@ -40,9 +40,7 @@ class MetadataTest(unittest.TestCase):
         output_id, output_data = metadata_plugin.collect_metadata(input)
 
         self.assertEqual("success", output_id)
-        self.assertIsInstance(
-            output_data, metadata_schema.SelectedFacts
-        )
+        self.assertIsInstance(output_data, metadata_schema.SelectedFacts)
         self.assertGreaterEqual(len(output_data.architecture), 1)
         # Some expected keys in the dict
         self.assertIsInstance(output_data.env, dict)

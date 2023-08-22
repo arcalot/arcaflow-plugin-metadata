@@ -45,7 +45,7 @@ def collect_metadata(
         output = convert_to_supported_type(selected_facts)
 
         return "success", selected_facts_schema.unserialize(output)
-    
+
     except KeyError:
         return "error", ErrorOutput("missing a key in ansible facts")
 
