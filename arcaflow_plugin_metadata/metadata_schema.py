@@ -166,15 +166,6 @@ selected_facts_schema = plugin.build_object_schema(SelectedFacts)
 
 
 @dataclass
-class SuccessOutput:
-    """
-    This is the output data structure for the success case.
-    """
-
-    metadata: SelectedFacts
-
-
-@dataclass
 class ErrorOutput:
     """
     This is the output data structure in the error  case.

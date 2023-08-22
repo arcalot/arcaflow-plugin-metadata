@@ -41,14 +41,14 @@ class MetadataTest(unittest.TestCase):
 
         self.assertEqual("success", output_id)
         self.assertIsInstance(
-            output_data.metadata, metadata_schema.SelectedFacts
+            output_data, metadata_schema.SelectedFacts
         )
-        self.assertGreaterEqual(len(output_data.metadata.architecture), 1)
+        self.assertGreaterEqual(len(output_data.architecture), 1)
         # Some expected keys in the dict
-        self.assertIsInstance(output_data.metadata.env, dict)
-        self.assertIsInstance(output_data.metadata.kernel, str)
-        self.assertIsInstance(output_data.metadata.processor, list)
-        self.assertIsInstance(output_data.metadata.swaptotal_mb, int)
+        self.assertIsInstance(output_data.env, dict)
+        self.assertIsInstance(output_data.kernel, str)
+        self.assertIsInstance(output_data.processor, list)
+        self.assertIsInstance(output_data.swaptotal_mb, int)
 
     def test_convert_to_homogeneous_list(self):
         test_cases = [

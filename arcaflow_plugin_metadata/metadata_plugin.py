@@ -8,7 +8,7 @@ import ansible_runner
 
 from metadata_schema import (
     InputParams,
-    SuccessOutput,
+    SelectedFacts,
     ErrorOutput,
     selected_facts_schema,
 )
@@ -18,11 +18,11 @@ from metadata_schema import (
     id="collect-metadata",
     name="Collect Metadata",
     description="Collects ansible facts metadata",
-    outputs={"success": SuccessOutput, "error": ErrorOutput},
+    outputs={"success": SelectedFacts, "error": ErrorOutput},
 )
 def collect_metadata(
     params: InputParams,
-) -> typing.Tuple[str, typing.Union[SuccessOutput, ErrorOutput]]:
+) -> typing.Tuple[str, typing.Union[SelectedFacts, ErrorOutput]]:
 
     ansible_host = "localhost"
     selected_facts = {}
@@ -44,9 +44,8 @@ def collect_metadata(
         # Convert to dict
         output = convert_to_supported_type(selected_facts)
 
-        return "success", SuccessOutput(
-            selected_facts_schema.unserialize(output)
-        )
+        return "success", selected_facts_schema.unserialize(output)
+    
     except KeyError:
         return "error", ErrorOutput("missing a key in ansible facts")
 
@@ -99,7 +98,6 @@ if __name__ == "__main__":
     sys.exit(
         plugin.run(
             plugin.build_schema(
-                # List your step functions here:
                 collect_metadata,
             )
         )
