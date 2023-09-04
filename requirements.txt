@@ -1,9 +1,9 @@
 ansible-core==2.15.3; python_version >= "3.9" and python_version < "4.0" \
     --hash=sha256:261bc01a15274fc5a6950d5b92b9aa1b7d7c6e8f7543c914505e5bfd9744793a \
     --hash=sha256:bc2f5ab74e1c81609aaa9bc8f7f92d939d8e1c847923290301231bdf4dadc812
-ansible-runner==2.3.3; python_version >= "3.9" and python_version < "4.0" \
-    --hash=sha256:38ff635e4b94791de2956c81e265836ec4965b30e9ee35d72fcf3271dc46b98b \
-    --hash=sha256:c57ae0d096760d66b2897b0f9009856c7b83fd5428dcb831f470cba348346396
+ansible-runner==2.3.4; python_version >= "3.9" and python_version < "4.0" \
+    --hash=sha256:73cca4fe509c8f4f0e93bf8ae13492c98454c62152685e43bdbd0f51907682bb \
+    --hash=sha256:79a1bd134d813c8ea3740599c6fd961a11425ce7757f2fd725cf56d6a1a7236c
 arcaflow-plugin-sdk==0.10.3; python_version >= "3.9" and python_version < "4.0" \
     --hash=sha256:04e68c3209f352a29346efdfa457be9774abf721cd8ebf511613a698d3c479a4 \
     --hash=sha256:0c424f01ab2cd724a7a93aee0f16e9482b97716757e35e104e90d14d31019a66
