@@ -89,7 +89,7 @@ def convert_to_homogenous_list(input_list: list):
             break
         elif type(j) is float:
             list_type = float()
-        elif type(j) is int and type(list_type) != float:
+        elif type(j) is int and type(list_type) is not float:
             list_type = int()
     return list(map(type(list_type), input_list))
 
