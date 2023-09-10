@@ -12,6 +12,7 @@ jobs:
     with:
       image_name: ${{ github.event.repository.name }}
       image_tag: 'latest'
+      multi_arch: true
     secrets:
       QUAY_NAMESPACE: ${{ secrets.QUAY_NAMESPACE }}
       QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
