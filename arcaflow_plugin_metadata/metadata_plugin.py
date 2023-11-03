@@ -23,7 +23,6 @@ from metadata_schema import (
 def collect_metadata(
     params: InputParams,
 ) -> typing.Tuple[str, typing.Union[SelectedFacts, ErrorOutput]]:
-
     ansible_host = "localhost"
     selected_facts = {}
 
