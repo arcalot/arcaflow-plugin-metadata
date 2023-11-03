@@ -37,7 +37,9 @@ class MetadataTest(unittest.TestCase):
     def test_functional(self):
         input = metadata_plugin.InputParams()
 
-        output_id, output_data = metadata_plugin.collect_metadata(input)
+        output_id, output_data = metadata_plugin.collect_metadata(
+            params=input, run_id="plugin_ci"
+        )
 
         self.assertEqual("success", output_id)
         self.assertIsInstance(output_data, metadata_schema.SelectedFacts)
@@ -75,9 +77,7 @@ class MetadataTest(unittest.TestCase):
         )
         self.assertEqual(
             str,
-            type(
-                metadata_plugin.convert_to_homogenous_list([1, 1.0, "1.0"])[0]
-            ),
+            type(metadata_plugin.convert_to_homogenous_list([1, 1.0, "1.0"])[0]),
         )
 
 

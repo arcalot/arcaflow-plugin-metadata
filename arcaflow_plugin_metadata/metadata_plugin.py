@@ -23,7 +23,6 @@ from metadata_schema import (
 def collect_metadata(
     params: InputParams,
 ) -> typing.Tuple[str, typing.Union[SelectedFacts, ErrorOutput]]:
-
     ansible_host = "localhost"
     selected_facts = {}
 
@@ -37,7 +36,7 @@ def collect_metadata(
         host_ansible_facts = r.get_fact_cache(ansible_host)
 
         for fact, value in host_ansible_facts.items():
-            new_fact = fact[len("ansible_"):]
+            new_fact = fact[len("ansible_") :]
             if new_fact in selected_facts_schema.properties:
                 selected_facts.update({new_fact: value})
 
