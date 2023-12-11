@@ -1,6 +1,6 @@
-ansible-core==2.16.0; python_version >= "3.9" and python_version < "4.0" \
-    --hash=sha256:6b4870ac65b708953e1509b8ccca669731a17d2beadabd8208c9f90d189058ca \
-    --hash=sha256:b4a6c60fbc2f51e3ae68ec733c931ef957a04d7c8c92aa39242990b0f8adf149
+ansible-core==2.16.1; python_version >= "3.9" and python_version < "4.0" \
+    --hash=sha256:4fd1b3c86237507c67113f6770d2470f87477cd88244938d100a2d0fc37bf986 \
+    --hash=sha256:8fc972ba6ba2161ecbde8166c0042080726c754f69ecb3ccd8c6636c98dc1c7e
 ansible-runner==2.3.4; python_version >= "3.9" and python_version < "4.0" \
     --hash=sha256:73cca4fe509c8f4f0e93bf8ae13492c98454c62152685e43bdbd0f51907682bb \
     --hash=sha256:79a1bd134d813c8ea3740599c6fd961a11425ce7757f2fd725cf56d6a1a7236c
