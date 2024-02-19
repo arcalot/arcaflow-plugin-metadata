@@ -21,13 +21,13 @@ resolvelib = ">=0.5.3,<1.1.0"
 
 [[package]]
 name = "ansible-runner"
-version = "2.3.4"
+version = "2.3.5"
 description = "\"Consistent Ansible Python API and CLI with container and process isolation runtime capabilities\""
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "ansible-runner-2.3.4.tar.gz", hash = "sha256:79a1bd134d813c8ea3740599c6fd961a11425ce7757f2fd725cf56d6a1a7236c"},
-    {file = "ansible_runner-2.3.4-py3-none-any.whl", hash = "sha256:73cca4fe509c8f4f0e93bf8ae13492c98454c62152685e43bdbd0f51907682bb"},
+    {file = "ansible-runner-2.3.5.tar.gz", hash = "sha256:cd9ddd5765870ea3c545b6cb47aaad5f04d9a30a628dd3fcdb4f367a28c22085"},
+    {file = "ansible_runner-2.3.5-py3-none-any.whl", hash = "sha256:9c9f1a9eee3aae4964f74a12947fb50ad6d43ae285b809565f0ccdefe9243f81"},
 ]
 
 [package.dependencies]
@@ -824,4 +824,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "1d7bd6eba9ce3d5753019acb33a1b561020eddb7daa323bb34e72b240b7763a4"
+content-hash = "5bdaa4f20ccfce9a4b7fffb9a55d7a27829d68fcfeb1bb27b58884e63dd8ef28"
