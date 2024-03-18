@@ -21,13 +21,13 @@ resolvelib = ">=0.5.3,<1.1.0"
 
 [[package]]
 name = "ansible-runner"
-version = "2.3.5"
+version = "2.3.6"
 description = "\"Consistent Ansible Python API and CLI with container and process isolation runtime capabilities\""
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "ansible-runner-2.3.5.tar.gz", hash = "sha256:cd9ddd5765870ea3c545b6cb47aaad5f04d9a30a628dd3fcdb4f367a28c22085"},
-    {file = "ansible_runner-2.3.5-py3-none-any.whl", hash = "sha256:9c9f1a9eee3aae4964f74a12947fb50ad6d43ae285b809565f0ccdefe9243f81"},
+    {file = "ansible-runner-2.3.6.tar.gz", hash = "sha256:b2174a12dcad2dc2f342ea82876898f568a0b66c53568600bf80577158fcba1c"},
+    {file = "ansible_runner-2.3.6-py3-none-any.whl", hash = "sha256:4f153d9c3000a61b82d7253ca292849e3ad2c5d68dfff4377a6b98c4e6ff6c3e"},
 ]
 
 [package.dependencies]
@@ -55,13 +55,13 @@ PyYAML = ">=6.0.1,<6.1.0"
 
 [[package]]
 name = "autoflake"
-version = "2.3.0"
+version = "2.3.1"
 description = "Removes unused imports and unused variables"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "autoflake-2.3.0-py3-none-any.whl", hash = "sha256:79a51eb8c0744759d2efe052455ab20aa6a314763510c3fd897499a402126327"},
-    {file = "autoflake-2.3.0.tar.gz", hash = "sha256:8c2011fa34701b9d7dcf05b9873bc4859d4fce4e62dfea90dffefd1576f5f01d"},
+    {file = "autoflake-2.3.1-py3-none-any.whl", hash = "sha256:3ae7495db9084b7b32818b4140e6dc4fc280b712fb414f5b8fe57b0a8e85a840"},
+    {file = "autoflake-2.3.1.tar.gz", hash = "sha256:c98b75dc5b0a86459c4f01a1d32ac7eb4338ec4317a4469515ff1e687ecd909e"},
 ]
 
 [package.dependencies]
@@ -824,4 +824,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "5bdaa4f20ccfce9a4b7fffb9a55d7a27829d68fcfeb1bb27b58884e63dd8ef28"
+content-hash = "a1b713379ea09aa1bf6bed2de5cdefe598c6a6710dda46393c1a1cd5e821e36a"
