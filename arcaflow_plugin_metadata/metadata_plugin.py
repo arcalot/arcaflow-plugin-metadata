@@ -2,6 +2,7 @@
 
 import sys
 import typing
+import locale
 from arcaflow_plugin_sdk import plugin
 from ansible.utils.unsafe_proxy import AnsibleUnsafeText
 import ansible_runner
@@ -25,6 +26,8 @@ def collect_metadata(
 ) -> typing.Tuple[str, typing.Union[SelectedFacts, ErrorOutput]]:
     ansible_host = "localhost"
     selected_facts = {}
+
+    locale.setlocale(locale.LC_ALL, "C.UTF-8")
 
     try:
         r = ansible_runner.run(
