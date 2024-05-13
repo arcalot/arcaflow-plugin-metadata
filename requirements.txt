@@ -107,7 +107,7 @@ cffi==1.16.0; python_version >= "3.9" and python_version < "4.0" \
 constantly==23.10.4; python_version >= "3.9" and python_version < "4.0" \
     --hash=sha256:3fd9b4d1c3dc1ec9757f3c52aef7e53ad9323dbe39f51dfd4c43853b68dfa3f9 \
     --hash=sha256:aa92b70a33e2ac0bb33cd745eb61776594dc48764b06c35e0efd050b7f1c7cbd
-cryptography==42.0.5; python_version >= "3.9" and python_version < "4.0" \
+cryptography==42.0.7; python_version >= "3.9" and python_version < "4.0" \
     --hash=sha256:0270572b8bd2c833c3981724b8ee9747b3ec96f699a9665470018594301439ee \
     --hash=sha256:111a0d8553afcf8eb02a4fea6ca4f59d48ddb34497aa8706a6cf536f1a5ec576 \
     --hash=sha256:16a48c23a62a2f4a285699dba2e4ff2d1cff3115b9df052cdd976a18856d8e3d \
@@ -152,7 +152,7 @@ idna==3.7; python_version >= "3.9" and python_version < "4.0" \
 incremental==22.10.0 ; python_version >= "3.9" and python_version < "4.0" \
     --hash=sha256:912feeb5e0f7e0188e6f42241d2f450002e11bbc0937c65865045854c24c0bd0 \
     --hash=sha256:b864a1f30885ee72c5ac2835a761b8fe8aa9c28b9395cacf27286602688d3e51
-Jinja2==3.1.3; python_version >= "3.9" and python_version < "4.0" \
+Jinja2==3.1.4; python_version >= "3.9" and python_version < "4.0" \
     --hash=sha256:7d6d50dd97d52cbc355597bd845fabfbac3f551e1f99619e39a35ce8c370b5fa \
     --hash=sha256:ac8bd6544d4bb2c9792bf3a159e80bba8fda7f07e81bc3aed565432d5925ba90
 lockfile==0.12.2 ; python_version >= "3.9" and python_version < "4.0" \
