@@ -11,9 +11,9 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.9"
-arcaflow-plugin-sdk = "0.13.0"
+arcaflow-plugin-sdk = "0.14.1"
 ansible-core = "^2.14.0"
-ansible-runner = "2.3.6"
+ansible-runner = "2.4.0"
 
 [tool.poetry.dev-dependencies]
 docformatter = "^1.5.0"
