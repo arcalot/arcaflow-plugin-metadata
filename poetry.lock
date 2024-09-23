@@ -39,13 +39,13 @@ pyyaml = "*"
 
 [[package]]
 name = "arcaflow-plugin-sdk"
-version = "0.14.1"
+version = "0.14.2"
 description = "Plugin SDK for Python for the Arcaflow workflow engine"
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "arcaflow_plugin_sdk-0.14.1-py3-none-any.whl", hash = "sha256:9bd4395fcc48fcd72605866a6fd8c72bb83f57852bcf9bbd1b18809a97d8107b"},
-    {file = "arcaflow_plugin_sdk-0.14.1.tar.gz", hash = "sha256:ee5088b77c4500d1b1e8f5df37c5e05d035346cdb87a3cc8708ad781ff005aee"},
+    {file = "arcaflow_plugin_sdk-0.14.2-py3-none-any.whl", hash = "sha256:9408c720de08ee3f09b0b38648f4e33ee94c8a624d9dad01dca55f1249476c15"},
+    {file = "arcaflow_plugin_sdk-0.14.2.tar.gz", hash = "sha256:7c6ff03b1392cfef154873b11b4c607f73350eb19a04c081c146c2577b8fd172"},
 ]
 
 [package.dependencies]
@@ -812,4 +812,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "3b0a1fde5d15fbb9a4d49b4c834fde2f922d9df002301e4c0a3a144e928be82e"
+content-hash = "4636671c12dcd173c34cffa52a8352fd9a8c90d47a03a1d7aea7b279e9962276"
