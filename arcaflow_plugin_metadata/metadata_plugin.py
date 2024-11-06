@@ -36,6 +36,12 @@ def collect_metadata(
             module="gather_facts",
             quiet=True,
         )
+
+        if r.rc != 0:
+            return "error", ErrorOutput(
+                f"Unable to gather facts: ({r.rc}) {r.stdout.read()}"
+            )
+
         host_ansible_facts = r.get_fact_cache(ansible_host)
 
         for fact, value in host_ansible_facts.items():
@@ -48,8 +54,8 @@ def collect_metadata(
 
         return "success", selected_facts_schema.unserialize(output)
 
-    except KeyError:
-        return "error", ErrorOutput("missing a key in ansible facts")
+    except KeyError as exc:
+        return "error", ErrorOutput(f"Missing a key in ansible facts: {exc}")
 
 
 def convert_to_supported_type(ansible_value) -> typing.Dict:
