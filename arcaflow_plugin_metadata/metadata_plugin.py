@@ -38,7 +38,6 @@ def collect_metadata(
         )
 
         if r.rc != 0:
-            # print(r.stderr.read())
             return "error", ErrorOutput(
                 f"Unable to gather facts: ({r.rc}) {r.stdout.read()}"
             )
@@ -55,8 +54,8 @@ def collect_metadata(
 
         return "success", selected_facts_schema.unserialize(output)
 
-    except KeyError:
-        return "error", ErrorOutput("Missing a key in ansible facts")
+    except KeyError as exc:
+        return "error", ErrorOutput(f"Missing a key in ansible facts: {exc}")
 
 
 def convert_to_supported_type(ansible_value) -> typing.Dict:
