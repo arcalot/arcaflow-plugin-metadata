@@ -15,7 +15,36 @@ class MetadataTest(unittest.TestCase):
                 fqdn="foo.bar",
                 architecture="x86_64",
                 kernel="1.2.3.test4",
-                # machine_id="abc123",
+                memtotal_mb=10,
+                swaptotal_mb=5,
+                processor_cores=8,
+                processor_count=4,
+                processor_threads_per_core=2,
+                product_name="narf",
+                product_version="a.b.c.1",
+                system_vendor="LENOVO",
+                processor=["0", "Intel", "Xeon", "1", "Intel", "Xeon"],
+                env={"FOO": "BAR", "NARF": "BLARG"},
+                uptime_seconds=9999,
+                local={
+                    "hardware": {
+                        "model": "Test System Model",
+                        "vendor": "Test Vendor",
+                        "features": ["feature_a", "feature_b"],
+                    },
+                    "site": {
+                        "location": "lab-1",
+                        "rack": "R01",
+                    },
+                },
+            )
+        )
+
+        plugin.test_object_serialization(
+            metadata_schema.SelectedFacts(
+                fqdn="foo.bar",
+                architecture="x86_64",
+                kernel="1.2.3.test4",
                 memtotal_mb=10,
                 swaptotal_mb=5,
                 processor_cores=8,
@@ -49,6 +78,25 @@ class MetadataTest(unittest.TestCase):
         self.assertIsInstance(output_data.kernel, str)
         self.assertIsInstance(output_data.processor, list)
         self.assertIsInstance(output_data.swaptotal_mb, int)
+
+    def test_convert_nested_dict(self):
+        nested = {
+            "hardware": {
+                "model": "Test System Model",
+                "features": ["feature_a", "feature_b"],
+            },
+            "site": {
+                "location": "lab-1",
+                "rack": "R01",
+            },
+        }
+        result = metadata_plugin.convert_to_supported_type(nested)
+        self.assertEqual(result["hardware"]["model"], "Test System Model")
+        self.assertEqual(
+            result["hardware"]["features"],
+            ["feature_a", "feature_b"],
+        )
+        self.assertEqual(result["site"]["location"], "lab-1")
 
     def test_convert_to_homogeneous_list(self):
         test_cases = [
