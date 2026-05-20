@@ -133,13 +133,6 @@ class SelectedFacts:
         }
     )
 
-    product_name: str = field(
-        metadata={
-            "name": "ansible product name",
-            "description": "The system product name",
-        }
-    )
-
     processor: typing.List[str] = field(
         metadata={
             "name": "ansible processor",
@@ -159,6 +152,14 @@ class SelectedFacts:
             "name": "ansible uptime seconds",
             "description": "The system uptime in seconds",
         }
+    )
+
+    local: typing.Optional[typing.Dict[str, typing.Any]] = field(
+        default=None,
+        metadata={
+            "name": "ansible local",
+            "description": "Custom local facts from /etc/ansible/facts.d/",
+        },
     )
 
 
