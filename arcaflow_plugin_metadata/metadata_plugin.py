@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import glob
+import json
+import os
 import sys
 import typing
 import locale
@@ -42,7 +45,7 @@ def collect_metadata(
                 f"Unable to gather facts: ({r.rc}) {r.stdout.read()}"
             )
 
-        host_ansible_facts = r.get_fact_cache(ansible_host)
+        host_ansible_facts = _extract_facts(r, ansible_host)
 
         for fact, value in host_ansible_facts.items():
             new_fact = fact[len("ansible_"):]
@@ -56,6 +59,46 @@ def collect_metadata(
 
     except KeyError as exc:
         return "error", ErrorOutput(f"Missing a key in ansible facts: {exc}")
+
+
+def _extract_facts(runner_result, host: str) -> dict:
+    """Extract ansible facts from a runner result.
+
+    Tries the fact cache first (works with older ansible-runner versions).
+    Falls back to reading the fact cache files directly when
+    get_fact_cache() returns empty, which happens with newer
+    ansible-runner/ansible-core where the cache key and storage
+    format changed (e.g. 's1_localhost' with a '__payload__' wrapper).
+    As a last resort, extracts facts from runner events.
+    """
+    fact_cache = runner_result.get_fact_cache(host)
+    if fact_cache:
+        return dict(fact_cache)
+
+    # Try reading fact cache files directly from the artifact directory.
+    # Newer ansible-runner stores facts in files like 's1_localhost'
+    # with a '__payload__' JSON wrapper.
+    artifact_dir = runner_result.config.artifact_dir
+    cache_dir = os.path.join(artifact_dir, "fact_cache")
+    if os.path.isdir(cache_dir):
+        for cache_file in glob.glob(os.path.join(cache_dir, "*")):
+            try:
+                with open(cache_file) as f:
+                    data = json.load(f)
+                if "__payload__" in data:
+                    return json.loads(data["__payload__"])
+                return data
+            except (json.JSONDecodeError, IOError):
+                continue
+
+    # Fall back to extracting facts from runner events
+    for event in runner_result.events:
+        event_data = event.get("event_data", {})
+        res = event_data.get("res", {})
+        if "ansible_facts" in res:
+            return res["ansible_facts"]
+
+    return {}
 
 
 def convert_to_supported_type(ansible_value) -> typing.Dict:
