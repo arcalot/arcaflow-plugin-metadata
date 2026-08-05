@@ -35,6 +35,9 @@ COPY LICENSE /app/
 COPY README.md /app/
 COPY ${package}/ /app/${package}
 
+# Install jq (needed by local fact scripts in /etc/ansible/facts.d/)
+RUN dnf install -y jq && dnf clean all
+
 # Install all plugin dependencies from the generated requirements.txt file
 RUN python -m pip install -r requirements.txt
 
